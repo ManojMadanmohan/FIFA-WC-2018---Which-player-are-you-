@@ -18,4 +18,5 @@ app/google_services.json
 app/*.apk
 *.properties
 .idea/*
+.idea/
 .idea*
