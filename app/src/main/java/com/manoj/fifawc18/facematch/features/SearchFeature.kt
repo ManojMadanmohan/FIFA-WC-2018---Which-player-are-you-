@@ -52,7 +52,8 @@ class SearchFeature private constructor(contextIn: Context): ISearchFeature {
 
         if(bestMatch != null) {
             val playerId = bestMatch.face.externalImageId
-            val player = Player(playerId, "dummy", "69", "dummy", "dummy")
+
+            val player = PlayerDb.getInstance(context).getPlayer(playerId)
             return PlayerMatch(player, bestScore)
         } else {
             return PlayerMatch(null, 0.0f)
