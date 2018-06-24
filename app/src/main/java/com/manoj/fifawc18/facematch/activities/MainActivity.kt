@@ -13,14 +13,17 @@ import com.manoj.fifawc18.facematch.features.SearchFeature
 import com.manoj.fifawc18.facematch.models.PlayerMatch
 import android.provider.MediaStore
 import android.graphics.Bitmap
-
-
+import com.theartofdev.edmodo.cropper.CropImageOptions
+import com.theartofdev.edmodo.cropper.CropImageView
 
 
 class MainActivity: AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        CropImage.activity().setRequestedSize(100, 100).start(this)
+        CropImage.activity().setScaleType(CropImageView.ScaleType.CENTER)
+                .setAspectRatio(1, 1)
+                .setCropShape(CropImageView.CropShape.RECTANGLE)
+                .start(this)
     }
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
