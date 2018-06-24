@@ -6,6 +6,7 @@ import com.manoj.fifawc18.facematch.utils.SingletonHolder
 import com.opencsv.CSVReader
 import java.io.File
 import java.io.FileReader
+import java.io.InputStreamReader
 
 class PlayerDb private constructor(contextIn: Context) {
     private val _context: Context
@@ -13,9 +14,8 @@ class PlayerDb private constructor(contextIn: Context) {
 
     init {
         _context = contextIn
-        val csvfileString = _context.getApplicationInfo().dataDir + File.separatorChar + "player_list_android.csv"
-        val csvFile = File(csvfileString);
-        _playerRows =  CSVReader(FileReader(csvFile)).readAll()
+        val csvStream = _context.assets.open("player_list_android.csv")
+        _playerRows =  CSVReader(InputStreamReader(csvStream)).readAll()
     }
 
     companion object: SingletonHolder<PlayerDb, Context>(:: PlayerDb) {}
