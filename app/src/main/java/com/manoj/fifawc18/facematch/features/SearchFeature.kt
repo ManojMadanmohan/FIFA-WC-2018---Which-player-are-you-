@@ -26,18 +26,19 @@ class SearchFeature private constructor(contextIn: Context): ISearchFeature {
 
     }
 
-    override fun findMatchingPlayer(inputImage: Bitmap, listener: ISearchFeature.CompletionListener) {
+    override fun findMatchingPlayer(resultUri: String, listener: ISearchFeature.CompletionListener) {
         var thread = HandlerThread("background-thread")
+        thread.start()
         var backgroundHandler = Handler(thread.looper)
         var runnable = Runnable {
-            var playerMatch = findMatchingPlayerSync(inputImage)
+            var playerMatch = findMatchingPlayerSync(resultUri)
             postResultOnMainThread(playerMatch, listener)
         }
         backgroundHandler.post(runnable)
     }
 
-    private fun findMatchingPlayerSync(inputImage: Bitmap): PlayerMatch {
-        val matches = awsClient.searchForMatchingFace(inputImage, AWS_FACE_COLLECTION_ID)
+    private fun findMatchingPlayerSync(resultUri: String): PlayerMatch {
+        val matches = awsClient.searchForMatchingFace(resultUri, AWS_FACE_COLLECTION_ID)
         var bestMatch: FaceMatch? = null
         var bestScore = 0.0f
         for(match in matches)

@@ -9,5 +9,5 @@ interface IAWSWrapper {
     /*
     Blocking call which needs to be made on background thread
      */
-    fun searchForMatchingFace(bitmap: Bitmap, collectionId: String) : List<FaceMatch>
+    fun searchForMatchingFace(resultUri: String, collectionId: String) : List<FaceMatch>
 }

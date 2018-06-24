@@ -9,19 +9,20 @@ class AWSConfig private constructor(contextIn: Context){
 
     private val awsIdentityPoolId = ""
     private val _context = contextIn
+    private val _credentials: CognitoCachingCredentialsProvider
 
     init {
-
+        _credentials = CognitoCachingCredentialsProvider(_context,
+                awsIdentityPoolId,// Identity pool ID
+                Regions.US_WEST_2 // Region
+        )
     }
     companion object: SingletonHolder<AWSConfig, Context> (::AWSConfig) {
 
     }
 
     fun getCredentialsProvider(): CognitoCachingCredentialsProvider {
-        return CognitoCachingCredentialsProvider(_context,
-                awsIdentityPoolId,// Identity pool ID
-                Regions.US_EAST_1 // Region
-        )
+        return _credentials
     }
 
 }

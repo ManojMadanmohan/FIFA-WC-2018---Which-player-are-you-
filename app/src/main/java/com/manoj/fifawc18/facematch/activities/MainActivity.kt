@@ -11,12 +11,16 @@ import android.widget.Toast
 import com.manoj.fifawc18.facematch.features.ISearchFeature
 import com.manoj.fifawc18.facematch.features.SearchFeature
 import com.manoj.fifawc18.facematch.models.PlayerMatch
+import android.provider.MediaStore
+import android.graphics.Bitmap
+
+
 
 
 class MainActivity: AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        CropImage.activity().start(this)
+        CropImage.activity().setRequestedSize(100, 100).start(this)
     }
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
@@ -24,16 +28,17 @@ class MainActivity: AppCompatActivity() {
             val result = CropImage.getActivityResult(data)
             if (resultCode === Activity.RESULT_OK) {
                 val resultUri = result.uri
+                val bitmap = MediaStore.Images.Media.getBitmap(this.contentResolver, resultUri)
+                SearchFeature.getInstance(this).findMatchingPlayer(resultUri.toString(), object: ISearchFeature.CompletionListener {
+                    override fun onComplete(matchingPlayer: PlayerMatch) {
+                        var name = matchingPlayer.player
+                        var score = matchingPlayer.matchScore
+                        Toast.makeText(this@MainActivity, "name = " + name + " score = " + score, Toast.LENGTH_LONG).show();
+                    }
+                })
             } else if (resultCode === CropImage.CROP_IMAGE_ACTIVITY_RESULT_ERROR_CODE) {
                 val error = result.error
             }
-            SearchFeature.getInstance(this).findMatchingPlayer(result.bitmap, object: ISearchFeature.CompletionListener {
-                override fun onComplete(matchingPlayer: PlayerMatch) {
-                    var name = matchingPlayer.player
-                    var score = matchingPlayer.matchScore
-                    Toast.makeText(this@MainActivity, "name = "+name+" score = "+score, Toast.LENGTH_LONG ).show();
-                }
-            })
         }
     }
 }

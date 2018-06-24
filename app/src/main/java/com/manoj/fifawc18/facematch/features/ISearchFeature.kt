@@ -12,5 +12,5 @@ interface ISearchFeature {
         fun onComplete(matchingPlayer: PlayerMatch)
     }
 
-    fun findMatchingPlayer(inputImage: Bitmap, listener: CompletionListener)
+    fun findMatchingPlayer(resultUri: String, listener: CompletionListener)
 }
