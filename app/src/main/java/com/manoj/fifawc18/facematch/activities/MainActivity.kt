@@ -13,6 +13,7 @@ import com.manoj.fifawc18.facematch.features.SearchFeature
 import com.manoj.fifawc18.facematch.models.PlayerMatch
 import android.provider.MediaStore
 import android.graphics.Bitmap
+import com.google.gson.Gson
 import com.theartofdev.edmodo.cropper.CropImageOptions
 import com.theartofdev.edmodo.cropper.CropImageView
 
@@ -30,12 +31,15 @@ class MainActivity: AppCompatActivity() {
         if (requestCode === CropImage.CROP_IMAGE_ACTIVITY_REQUEST_CODE) {
             val result = CropImage.getActivityResult(data)
             if (resultCode === Activity.RESULT_OK) {
-                val resultUri = result.uri
+                val resultUri = result.uri.toString()
                 SearchFeature.getInstance(this).findMatchingPlayer(resultUri.toString(), object: ISearchFeature.CompletionListener {
                     override fun onComplete(matchingPlayer: PlayerMatch) {
-                        var name = matchingPlayer.player
-                        var score = matchingPlayer.matchScore
-                        Toast.makeText(this@MainActivity, "name = " + name + " score = " + score, Toast.LENGTH_LONG).show();
+                        val gson = Gson()
+                        val playerMatchString = gson.toJson(matchingPlayer)
+                        val intent = Intent(this@MainActivity, ResultActivity::class.java)
+                        intent.putExtra(PLAYER_MATCH_EXTRA, playerMatchString)
+                        intent.putExtra(SELF_IMAGE_EXTRA, resultUri)
+                        startActivity(intent)
                     }
                 })
             } else if (resultCode === CropImage.CROP_IMAGE_ACTIVITY_RESULT_ERROR_CODE) {
