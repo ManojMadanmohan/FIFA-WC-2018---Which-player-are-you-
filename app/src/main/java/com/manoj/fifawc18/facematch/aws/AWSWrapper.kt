@@ -3,6 +3,7 @@ package com.manoj.fifawc18.facematch.aws
 import android.content.Context
 import android.graphics.Bitmap
 import android.net.Uri
+import android.provider.MediaStore
 import android.widget.Toast
 import com.amazonaws.auth.AWSCredentialsProvider
 import com.amazonaws.auth.BasicAWSCredentials
@@ -21,7 +22,11 @@ import java.io.ByteArrayInputStream
 import java.nio.ByteBuffer
 import java.io.ByteArrayOutputStream
 import java.io.FileInputStream
-import java.io.InputStream
+import android.graphics.Bitmap.CompressFormat
+
+
+
+
 
 
 class AWSWrapper private constructor(contextIn: Context): IAWSWrapper {
@@ -51,8 +56,15 @@ class AWSWrapper private constructor(contextIn: Context): IAWSWrapper {
     }
 
     private fun getByteBuffer(resultUri: String): ByteBuffer {
-        val inputStream = context.contentResolver.openInputStream(Uri.parse(resultUri));
-        val imageBytes = ByteBuffer.wrap(IOUtils.toByteArray(inputStream))
+        val origBitmap = MediaStore.Images.Media.getBitmap(context.getContentResolver(), Uri.parse(resultUri))
+        val scaledBitmap = Bitmap.createScaledBitmap(origBitmap, 300, 300, true);
+
+        val bos = ByteArrayOutputStream()
+        scaledBitmap.compress(CompressFormat.PNG, 0 /*ignored for PNG*/, bos)
+        val bitmapdata = bos.toByteArray()
+        val bs = ByteArrayInputStream(bitmapdata)
+
+        val imageBytes = ByteBuffer.wrap(IOUtils.toByteArray(bs))
         return imageBytes
     }
 
