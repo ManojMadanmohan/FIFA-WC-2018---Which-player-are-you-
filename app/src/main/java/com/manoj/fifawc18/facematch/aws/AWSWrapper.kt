@@ -4,29 +4,19 @@ import android.content.Context
 import android.graphics.Bitmap
 import android.net.Uri
 import android.provider.MediaStore
-import android.widget.Toast
-import com.amazonaws.auth.AWSCredentialsProvider
-import com.amazonaws.auth.BasicAWSCredentials
-import com.amazonaws.regions.Region
-import com.amazonaws.regions.Regions
-import com.amazonaws.services.rekognition.AmazonRekognition
 import com.amazonaws.services.rekognition.AmazonRekognitionClient
 import com.amazonaws.services.rekognition.model.FaceMatch
 import com.amazonaws.services.rekognition.model.Image
 import com.amazonaws.services.rekognition.model.SearchFacesByImageRequest
-import com.amazonaws.services.rekognition.model.SearchFacesByImageResult
 import com.amazonaws.util.IOUtils
 import com.manoj.fifawc18.facematch.config.AppConfig
 import com.manoj.fifawc18.facematch.utils.SingletonHolder
 import java.io.ByteArrayInputStream
 import java.nio.ByteBuffer
 import java.io.ByteArrayOutputStream
-import java.io.FileInputStream
 import android.graphics.Bitmap.CompressFormat
-
-
-
-
+import com.amazonaws.regions.Region
+import com.amazonaws.regions.Regions
 
 
 class AWSWrapper private constructor(contextIn: Context): IAWSWrapper {
@@ -38,6 +28,7 @@ class AWSWrapper private constructor(contextIn: Context): IAWSWrapper {
     init{
         val awsCredentials = AppConfig.getInstance(context).getAwsCredentials()
         awsRekognitionClient = AmazonRekognitionClient(awsCredentials)
+        awsRekognitionClient.setRegion(Region.getRegion(Regions.US_WEST_2))
     }
 
     companion object: SingletonHolder<AWSWrapper, Context>(:: AWSWrapper) {}
