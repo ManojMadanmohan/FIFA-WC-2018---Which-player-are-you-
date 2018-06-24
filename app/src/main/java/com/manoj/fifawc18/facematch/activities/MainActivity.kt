@@ -31,7 +31,6 @@ class MainActivity: AppCompatActivity() {
             val result = CropImage.getActivityResult(data)
             if (resultCode === Activity.RESULT_OK) {
                 val resultUri = result.uri
-                val bitmap = MediaStore.Images.Media.getBitmap(this.contentResolver, resultUri)
                 SearchFeature.getInstance(this).findMatchingPlayer(resultUri.toString(), object: ISearchFeature.CompletionListener {
                     override fun onComplete(matchingPlayer: PlayerMatch) {
                         var name = matchingPlayer.player
