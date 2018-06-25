@@ -4,20 +4,16 @@ import android.content.Intent
 import android.os.Bundle
 import android.support.v7.app.AppCompatActivity
 import com.theartofdev.edmodo.cropper.CropImage
-import com.theartofdev.edmodo.cropper.CropImageActivity
-import android.R.attr.data
 import android.app.Activity
 import android.widget.Toast
 import com.manoj.fifawc18.facematch.features.ISearchFeature
 import com.manoj.fifawc18.facematch.features.SearchFeature
 import com.manoj.fifawc18.facematch.models.PlayerMatch
-import android.provider.MediaStore
-import android.graphics.Bitmap
 import android.view.View
 import com.crashlytics.android.Crashlytics
 import com.google.gson.Gson
 import com.manoj.fifawc18.facematch.R
-import com.theartofdev.edmodo.cropper.CropImageOptions
+import com.manoj.fifawc18.facematch.utils.Utils
 import com.theartofdev.edmodo.cropper.CropImageView
 import kotlinx.android.synthetic.main.main_layout.*
 
@@ -26,13 +22,13 @@ class MainActivity: AppCompatActivity() {
 
     private val ERROR_CROP_COPY = "Could not recieve image. Please check permissions and try again"
     private val ERROR_AWS_COPY = "Something's gone wrong - It's likely that no face was detected in the image. Please try again with another image"
+    private val ERROR_NETWORK_COPY = "Network issue - please check your connection and try again"
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.main_layout)
-        launchCropActivity()
-        loader.hide()
-        retry_fm.setOnClickListener(View.OnClickListener {
+        showDefaultState()
+        main_action.setOnClickListener(View.OnClickListener {
             launchCropActivity()
         })
     }
@@ -48,8 +44,12 @@ class MainActivity: AppCompatActivity() {
         if (requestCode === CropImage.CROP_IMAGE_ACTIVITY_REQUEST_CODE) {
             val result = CropImage.getActivityResult(data)
             if (resultCode === Activity.RESULT_OK) {
-                val resultUri = result.uri.toString()
-                makeRequest(resultUri)
+                if(Utils.isNetworkAvailable(this)) {
+                    val resultUri = result.uri.toString()
+                    makeRequest(resultUri)
+                } else {
+                    showErrorToast(ERROR_NETWORK_COPY)
+                }
             } else if (resultCode === CropImage.CROP_IMAGE_ACTIVITY_RESULT_ERROR_CODE) {
                 val error = result.error
                 Crashlytics.logException(error)
@@ -74,11 +74,6 @@ class MainActivity: AppCompatActivity() {
         })
     }
 
-    private fun showLoadingState() {
-        loader.show();
-        retry_fm.visibility = View.GONE
-    }
-
     private fun launchResultsScreen(matchingPlayer: PlayerMatch, resultUri: String) {
         val gson = Gson()
         val playerMatchString = gson.toJson(matchingPlayer)
@@ -89,8 +84,15 @@ class MainActivity: AppCompatActivity() {
     }
 
     private fun showDefaultState() {
-        retry_fm.visibility = View.VISIBLE
+        main_action.isEnabled = true
+        main_frame.alpha = 1.0f
         loader.hide()
+    }
+
+    private fun showLoadingState() {
+        loader.show();
+        main_action.isEnabled = false
+        main_frame.alpha = 0.4f
     }
 
     private fun showErrorToast(errorCopy: String) {

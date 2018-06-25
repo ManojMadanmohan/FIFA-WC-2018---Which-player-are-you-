@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
     <LinearLayout
         android:orientation="vertical"
         android:layout_width="match_parent"
@@ -13,6 +13,7 @@
             android:id="@+id/self_image"
             android:layout_weight="1"
             android:scaleType="fitXY"
+            android:src="@mipmap/ic_person_placeholder"
             android:layout_width="match_parent"
             android:layout_height="0dp" />
 
@@ -21,6 +22,7 @@
             android:id="@+id/player_image"
             android:layout_weight="1"
             android:scaleType="fitXY"
+            android:src="@mipmap/ic_person_placeholder"
             android:layout_width="match_parent"
             android:layout_height="0dp" />
 
@@ -32,8 +34,9 @@
         android:width="96dp"
         android:height="96dp"
         android:gravity="center"
+        android:fontFamily="@font/fifa_font_family"
         android:background="@mipmap/fifa_circle"
-        android:textColor="#ffffff"
+        android:textColor="@color/White"
         android:textStyle="bold"
         android:id="@+id/match_score"
         android:textSize="16sp"
@@ -41,35 +44,47 @@
         android:layout_height="wrap_content"
         android:layout_centerInParent="true"/>
 
-    <TextView
-        android:id="@+id/player_name"
-        android:textSize="18dp"
-        android:paddingTop="8dp"
-        android:paddingBottom="8dp"
-        android:paddingLeft="16dp"
-        android:paddingRight="16dp"
-        android:background="@drawable/bg_player_name"
-        android:layout_centerHorizontal="true"
-        android:layout_above="@+id/player_info"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:textColor="#000000"
-        android:text="Player Name"/>
-
-    <TextView
-        android:id="@id/player_info"
-        android:textSize="12dp"
-        android:layout_marginBottom="4dp"
-        android:paddingTop="8dp"
-        android:paddingBottom="8dp"
-        android:paddingLeft="16dp"
-        android:paddingRight="16dp"
-        android:background="@drawable/bg_player_info"
+    <LinearLayout
         android:layout_centerHorizontal="true"
         android:layout_alignParentBottom="true"
+        android:gravity="center"
+        android:orientation="vertical"
+        android:paddingTop="8dp"
+        android:paddingBottom="8dp"
+        android:background="@drawable/bg_player_name"
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:textColor="#ffffff"
-        android:text="No. X, Country"/>
+        android:layout_height="wrap_content">
+
+        <TextView
+            android:id="@+id/player_name"
+            android:textSize="20dp"
+            android:paddingLeft="16dp"
+            android:paddingRight="16dp"
+            android:paddingBottom="2dp"
+            android:fontFamily="@font/fifa_font_family"
+            android:layout_centerHorizontal="true"
+            android:layout_above="@+id/player_info"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textColor="@color/White"
+            android:textStyle="bold"
+            android:text="Player Name"/>
+
+        <TextView
+            android:id="@id/player_info"
+            android:textSize="14dp"
+            android:paddingTop="2dp"
+            android:layout_marginBottom="4dp"
+            android:paddingLeft="16dp"
+            android:paddingRight="16dp"
+            android:fontFamily="@font/fifa_font_family"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textColor="@color/White"
+            android:text="No. X, Country"/>
+
+    </LinearLayout>
+
+
 
 </RelativeLayout>

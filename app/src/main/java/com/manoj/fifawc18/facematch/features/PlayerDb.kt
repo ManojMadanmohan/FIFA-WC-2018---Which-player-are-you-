@@ -3,6 +3,7 @@ package com.manoj.fifawc18.facematch.features
 import android.content.Context
 import com.manoj.fifawc18.facematch.models.Player
 import com.manoj.fifawc18.facematch.utils.SingletonHolder
+import com.manoj.fifawc18.facematch.utils.Utils
 import com.opencsv.CSVReader
 import java.io.File
 import java.io.FileReader
@@ -23,7 +24,8 @@ class PlayerDb private constructor(contextIn: Context) {
     fun getPlayer(playerId: String): Player? {
         for(row in _playerRows) {
             if(row[0] == playerId) {
-                return Player(row[1], row[2], row[3], row[4], row[5])
+                val playerName = Utils.formatPlayerName(row[1])
+                return Player(playerName, row[2], row[3], row[4], row[5])
             }
         }
         //no player found

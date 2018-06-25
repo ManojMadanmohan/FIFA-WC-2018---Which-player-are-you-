@@ -4,6 +4,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_height="match_parent"
     android:layout_width="match_parent"
+    android:background="@color/White"
     >
 
     <LinearLayout
@@ -11,38 +12,65 @@
         android:orientation="vertical"
         android:layout_width="match_parent"
         android:layout_height="match_parent">
+
         <TextView
-            android:textColor="#ff5555"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@color/White"
+            android:fontFamily="@font/fifa_font_family"
             android:gravity="center"
-            android:textStyle="bold"
-            android:layout_margin="8dp"
+            android:paddingTop="16dp"
+            android:text="FIFA World Cup 2018"
+            android:textColor="@color/FifaRed"
             android:textSize="24dp"
-            android:text="23 Countries. 736 Players."
+            android:textStyle="bold" />
+
+        <LinearLayout
+            android:orientation="vertical"
+            android:background="@drawable/main_bg"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content" />
-        <ImageView
-            android:background="@drawable/fifa_2018"
+            android:layout_height="match_parent">
+
+
+            <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@color/White"
+            android:fontFamily="@font/fifa_font_family"
+            android:gravity="center"
+            android:paddingBottom="16dp"
+            android:text="23 Countries, 736 Players"
+            android:textColor="@color/FifaRed"
+            android:textSize="24dp"
+            android:textStyle="bold" />
+            <View
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
             android:layout_weight="1"
+            />
+
+            <TextView
             android:layout_width="match_parent"
-            android:layout_height="0dp" />
-        <TextView
-            android:textColor="#ff5555"
-            android:gravity="center"
-            android:textStyle="bold"
+            android:layout_height="wrap_content"
             android:layout_margin="8dp"
-            android:textSize="18dp"
-            android:text="Which player do you look like? Upload an image and find out now!"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content" />
-        <Button
-            android:id="@+id/retry_fm"
-            android:text="Try It Out!"
+            android:fontFamily="@font/fifa_font_family"
             android:gravity="center"
-            android:elevation="8dp"
-            android:textColor="#ffffff"
-            android:background="@drawable/bg_player_info"
+            android:text="Which player do you look like? Upload an image and find out now!"
+            android:textColor="@color/White"
+            android:textSize="18dp"
+            android:textStyle="bold" />
+
+            <Button
+            android:id="@+id/main_action"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content" />
+            android:layout_height="wrap_content"
+            android:layout_margin="8dp"
+            android:background="@drawable/bg_action"
+            android:fontFamily="@font/fifa_font_family"
+            android:gravity="center"
+            android:text="Try It Out!"
+            android:textColor="@color/White" />
+        </LinearLayout>
 
     </LinearLayout>
 
