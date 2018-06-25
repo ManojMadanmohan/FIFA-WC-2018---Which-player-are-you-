@@ -25,7 +25,7 @@ import kotlinx.android.synthetic.main.main_layout.*
 class MainActivity: AppCompatActivity() {
 
     private val ERROR_CROP_COPY = "Could not recieve image. Please check permissions and try again"
-    private val ERROR_AWS_COPY = "Something's gone wrong - It's likely that no face was detected in the image. Please try again with a new image"
+    private val ERROR_AWS_COPY = "Something's gone wrong - It's likely that no face was detected in the image. Please try again with another image"
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
