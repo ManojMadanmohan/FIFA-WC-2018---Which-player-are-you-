@@ -12,6 +12,7 @@
         <ImageView
             android:id="@+id/self_image"
             android:layout_weight="1"
+            android:scaleType="fitXY"
             android:layout_width="match_parent"
             android:layout_height="0dp" />
 
@@ -19,15 +20,17 @@
             android:layout_below="@+id/self_image"
             android:id="@+id/player_image"
             android:layout_weight="1"
+            android:scaleType="fitXY"
             android:layout_width="match_parent"
             android:layout_height="0dp" />
 
     </LinearLayout>
 
     <TextView
-        android:text="78%"
-        android:width="100dp"
-        android:height="100dp"
+        android:text="78% match"
+        android:padding="4dp"
+        android:width="96dp"
+        android:height="96dp"
         android:gravity="center"
         android:background="@mipmap/fifa_circle"
         android:textColor="#ffffff"
@@ -40,7 +43,7 @@
 
     <TextView
         android:id="@+id/player_name"
-        android:textSize="24sp"
+        android:textSize="18dp"
         android:paddingTop="8dp"
         android:paddingBottom="8dp"
         android:paddingLeft="16dp"
@@ -55,7 +58,7 @@
 
     <TextView
         android:id="@id/player_info"
-        android:textSize="16sp"
+        android:textSize="12dp"
         android:layout_marginBottom="4dp"
         android:paddingTop="8dp"
         android:paddingBottom="8dp"
