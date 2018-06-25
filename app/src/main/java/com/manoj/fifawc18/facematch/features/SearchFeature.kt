@@ -31,8 +31,16 @@ class SearchFeature private constructor(contextIn: Context): ISearchFeature {
         thread.start()
         var backgroundHandler = Handler(thread.looper)
         var runnable = Runnable {
-            var playerMatch = findMatchingPlayerSync(resultUri)
-            postResultOnMainThread(playerMatch, listener)
+            try{
+                var playerMatch = findMatchingPlayerSync(resultUri)
+                postOnMainThread(Runnable {
+                    listener.onComplete(playerMatch)
+                })
+            } catch (exception: Exception) {
+                postOnMainThread(Runnable {
+                    listener.onError(exception)
+                })
+            }
         }
         backgroundHandler.post(runnable)
     }
@@ -62,9 +70,11 @@ class SearchFeature private constructor(contextIn: Context): ISearchFeature {
     }
 
     private fun postResultOnMainThread(playerMatch: PlayerMatch, listener: ISearchFeature.CompletionListener) {
+
+    }
+
+    private fun postOnMainThread(runnable: Runnable) {
         var mainHandler = Handler(context.mainLooper)
-        mainHandler.post({
-            listener.onComplete(playerMatch)
-        })
+        mainHandler.post(runnable)
     }
 }

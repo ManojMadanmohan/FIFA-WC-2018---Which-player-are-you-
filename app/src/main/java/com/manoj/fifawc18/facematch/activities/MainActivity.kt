@@ -14,6 +14,7 @@ import com.manoj.fifawc18.facematch.models.PlayerMatch
 import android.provider.MediaStore
 import android.graphics.Bitmap
 import android.view.View
+import com.crashlytics.android.Crashlytics
 import com.google.gson.Gson
 import com.manoj.fifawc18.facematch.R
 import com.theartofdev.edmodo.cropper.CropImageOptions
@@ -22,6 +23,10 @@ import kotlinx.android.synthetic.main.main_layout.*
 
 
 class MainActivity: AppCompatActivity() {
+
+    private val ERROR_CROP_COPY = "Could not recieve image. Please check permissions and try again"
+    private val ERROR_AWS_COPY = "Something's gone wrong - It's likely that no face was detected in the image. Please try again with a new image"
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.main_layout)
@@ -47,28 +52,48 @@ class MainActivity: AppCompatActivity() {
                 makeRequest(resultUri)
             } else if (resultCode === CropImage.CROP_IMAGE_ACTIVITY_RESULT_ERROR_CODE) {
                 val error = result.error
+                Crashlytics.logException(error)
+                showErrorToast(ERROR_CROP_COPY)
             }
         }
     }
 
     private fun makeRequest(resultUri: String) {
-        retry_fm.visibility = View.GONE
-        loader.show();
+        showLoadingState()
         SearchFeature.getInstance(this).findMatchingPlayer(resultUri.toString(), object : ISearchFeature.CompletionListener {
             override fun onComplete(matchingPlayer: PlayerMatch) {
-                onResultObtained(matchingPlayer, resultUri)
+                showDefaultState()
+                launchResultsScreen(matchingPlayer, resultUri)
+            }
+
+            override fun onError(throwable: Throwable) {
+                Crashlytics.logException(throwable)
+                showDefaultState()
+                showErrorToast(ERROR_AWS_COPY)
             }
         })
     }
 
-    private fun onResultObtained(matchingPlayer: PlayerMatch, resultUri: String) {
-        retry_fm.visibility = View.VISIBLE
-        loader.hide()
+    private fun showLoadingState() {
+        loader.show();
+        retry_fm.visibility = View.GONE
+    }
+
+    private fun launchResultsScreen(matchingPlayer: PlayerMatch, resultUri: String) {
         val gson = Gson()
         val playerMatchString = gson.toJson(matchingPlayer)
         val intent = Intent(this@MainActivity, ResultActivity::class.java)
         intent.putExtra(PLAYER_MATCH_EXTRA, playerMatchString)
         intent.putExtra(SELF_IMAGE_EXTRA, resultUri)
         startActivity(intent)
+    }
+
+    private fun showDefaultState() {
+        retry_fm.visibility = View.VISIBLE
+        loader.hide()
+    }
+
+    private fun showErrorToast(errorCopy: String) {
+        Toast.makeText(this, errorCopy, Toast.LENGTH_LONG).show()
     }
 }

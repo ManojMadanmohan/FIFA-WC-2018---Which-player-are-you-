@@ -10,6 +10,8 @@ interface ISearchFeature {
         returns a player match with null player and 0 score in case no match found
          */
         fun onComplete(matchingPlayer: PlayerMatch)
+
+        fun onError(throwable: Throwable)
     }
 
     fun findMatchingPlayer(resultUri: String, listener: CompletionListener)
