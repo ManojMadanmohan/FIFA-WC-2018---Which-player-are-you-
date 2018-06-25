@@ -3,6 +3,8 @@ package com.manoj.fifawc18.facematch.activities
 import android.net.Uri
 import android.os.Bundle
 import android.support.v7.app.AppCompatActivity
+import android.view.Menu
+import android.view.MenuItem
 import android.widget.ImageView
 import android.widget.TextView
 import butterknife.BindView
@@ -40,10 +42,25 @@ class ResultActivity: AppCompatActivity() {
         val player = playerMatch!!.player!!
         Glide.with(this).load(Uri.parse(selfImageUri)).into(self_image)
         Glide.with(this).load(Uri.parse(player.imageUrl)).into(player_image)
-        match_score.setText(playerMatch!!.matchScore.toInt().toString()+"%")
+        match_score.setText(playerMatch!!.matchScore.toInt().toString()+"% match")
         player_name.setText(player.name)
         val playerInfoStr = "No "+player.jerseyNum+", "+player.country
         player_info.setText(playerInfoStr)
+    }
+
+    override fun onCreateOptionsMenu(menu: Menu?): Boolean {
+        menuInflater.inflate(R.menu.result_screen_menu, menu)
+        return super.onCreateOptionsMenu(menu)
+    }
+
+    override fun onOptionsItemSelected(item: MenuItem?): Boolean {
+        if(item != null) {
+            if(item.itemId == R.id.result_menu_retry) {
+                finish()
+                return true
+            }
+        }
+        return super.onOptionsItemSelected(item)
     }
 
 }

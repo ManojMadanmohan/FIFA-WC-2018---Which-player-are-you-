@@ -26,6 +26,12 @@
 
     <TextView
         android:text="78%"
+        android:width="100dp"
+        android:height="100dp"
+        android:gravity="center"
+        android:background="@mipmap/fifa_circle"
+        android:textColor="#ffffff"
+        android:textStyle="bold"
         android:id="@+id/match_score"
         android:textSize="16sp"
         android:layout_width="wrap_content"
@@ -35,20 +41,32 @@
     <TextView
         android:id="@+id/player_name"
         android:textSize="24sp"
+        android:paddingTop="8dp"
+        android:paddingBottom="8dp"
+        android:paddingLeft="16dp"
+        android:paddingRight="16dp"
+        android:background="@drawable/bg_player_name"
         android:layout_centerHorizontal="true"
         android:layout_above="@+id/player_info"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:textColor="#000000"
         android:text="Player Name"/>
 
     <TextView
         android:id="@id/player_info"
         android:textSize="16sp"
-        android:layout_margin="8dp"
+        android:layout_marginBottom="4dp"
+        android:paddingTop="8dp"
+        android:paddingBottom="8dp"
+        android:paddingLeft="16dp"
+        android:paddingRight="16dp"
+        android:background="@drawable/bg_player_info"
         android:layout_centerHorizontal="true"
         android:layout_alignParentBottom="true"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:textColor="#ffffff"
         android:text="No. X, Country"/>
 
 </RelativeLayout>
