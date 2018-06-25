@@ -40,7 +40,7 @@ dependencies {
     implementation 'com.github.bumptech.glide:glide:4.7.1'
     compile 'com.android.support:support-compat:27.1.1'
     annotationProcessor 'com.github.bumptech.glide:compiler:4.7.1'
-    compile 'com.opencsv:opencsv:3.9'
+    implementation 'com.opencsv:opencsv:3.9'
     compile 'com.theartofdev.edmodo:android-image-cropper:2.7.+'
     compile('com.crashlytics.sdk.android:crashlytics:2.9.4@aar') {
         transitive = true;
