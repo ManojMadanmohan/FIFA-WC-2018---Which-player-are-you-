@@ -18,12 +18,16 @@ android {
     }
     buildTypes {
         release {
-            minifyEnabled false
+            minifyEnabled true
+            shrinkResources true
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
         }
         debug {
             applicationIdSuffix ".debug"
         }
+    }
+    lintOptions {
+        checkReleaseBuilds false
     }
 }
 
@@ -36,8 +40,6 @@ dependencies {
     implementation 'com.github.bumptech.glide:glide:4.7.1'
     compile 'com.android.support:support-compat:27.1.1'
     annotationProcessor 'com.github.bumptech.glide:compiler:4.7.1'
-    implementation 'com.jakewharton:butterknife:8.8.1'
-    annotationProcessor 'com.jakewharton:butterknife-compiler:8.8.1'
     compile 'com.opencsv:opencsv:3.9'
     compile 'com.theartofdev.edmodo:android-image-cropper:2.7.+'
     compile('com.crashlytics.sdk.android:crashlytics:2.9.4@aar') {
