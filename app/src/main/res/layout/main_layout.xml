@@ -39,7 +39,7 @@
             android:fontFamily="@font/fifa_font_family"
             android:gravity="center"
             android:paddingBottom="16dp"
-            android:text="23 Countries, 736 Players"
+            android:text="32 Countries, 736 Players"
             android:textColor="@color/FifaRed"
             android:textSize="24dp"
             android:textStyle="bold" />
